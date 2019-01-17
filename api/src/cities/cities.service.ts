@@ -70,7 +70,8 @@ export class CitiesService {
     return new Promise((resolve, reject) => {
       console.log('=> Getting User\'s Cities : ' + id)
       db.all(
-          "SELECT * FROM userCities WHERE idUser = ?", [id], (err, rows) => {
+        "SELECT idCity, position, cities.name, cities.population FROM userCities INNER JOIN cities ON cities.id = userCities.idCity WHERE idUser = ?", [id], (err, rows) => {
+              console.log(rows)
               return !err ?
                   resolve(rows) :
                   reject(new HttpException(err, 500))
