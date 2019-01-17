@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Put, Param, Delete, Query, HttpException, HttpStatus } from '@nestjs/common'
 import { CitiesService } from './cities.service'
+import bodyParser = require('body-parser');
 
 @Controller('cities')
 export class CitiesController {
@@ -12,6 +13,11 @@ export class CitiesController {
   @Post('add')
   async add(@Body('idUser') idUser, @Body('idCity') idCity, @Body('position') position) {
     return await this.citiesService.addUserCity(idUser, idCity, position)
+  }
+  @Put('update')
+  async update(@Body('id') id, @Body('userCities') userCities) {
+    await this.citiesService.deleteUserCities(id)
+    return await this.citiesService.addUserCities(id, userCities)
   }
   @Get()
   async findAll() {

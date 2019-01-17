@@ -41,6 +41,31 @@ export class CitiesService {
     })
   }
 
+  deleteUserCities(id: String) {
+    return new Promise((resolve, reject) => {
+      db.run(
+        "DELETE FROM userCities WHERE idUser = ?", [id], (err) => {
+          return !err ?
+            resolve({'message':'Cities for  ' + id + ' has been deleted'}) :
+            reject(new HttpException(err, 500))
+        })
+    })
+  }
+
+  addUserCities(id: String, userCities: Array<any>) {
+    let values = userCities.map((city) => `("${id}", "${city.id}", ${city.position})`).join(',')
+    let request = 'INSERT INTO userCities(idUser, idCity, position) VALUES ' + values
+    console.log('REQUEST IS == ', request)
+    return new Promise((resolve, reject) => {
+      console.log('=> Adding User\'s Cities : ' + id)
+      db.run(request, (err, rows) => {
+        return !err ?
+          resolve({'message':'Cities has been created'}) :
+          reject(new HttpException(err, 500))
+      })
+    })
+  }
+
   getUserCities(id: String) {
     return new Promise((resolve, reject) => {
       console.log('=> Getting User\'s Cities : ' + id)

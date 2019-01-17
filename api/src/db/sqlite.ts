@@ -10,8 +10,6 @@ let sql_cities = 'CREATE TABLE IF NOT EXISTS cities(' +
 let sql_userCities = 'CREATE TABLE IF NOT EXISTS userCities(' +
   'idUser VARCHAR NOT NULL, idCity VARCHAR NOT NULL, position INTEGER NOT NULL)'
 
-let sql_populate =
-
 sqlite.serialize(function () {
   sqlite.run(sql_users)
   sqlite.run(sql_cities)
