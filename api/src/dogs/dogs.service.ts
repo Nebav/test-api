@@ -65,16 +65,25 @@ export class DogsService {
     })
   }
 
-  addUserDog(idUser: String, idDog: String, position: Number) {
+  addUserDog(idUser: String, idDog: String) {
+    let position
     return new Promise((resolve, reject) => {
       console.log('=> Adding UserDog')
-      db.run(
-          "INSERT INTO userDogs (idUser, idDog, position)" +
-          "VALUES (?, ?, ?)", [idUser, idDog, position], (err) => {
+      db.get("SELECT MAX(position) as position FROM userDogs WHERE idUser = ?", [idUser], (err, row) => {
+        if (!err) {
+          position = row.position ? row.position + 1 : 1
+          db.run(
+            "INSERT INTO userDogs (idUser, idDog, position)" +
+            "VALUES (?, ?, ?)", [idUser, idDog, position], (err) => {
               return !err ?
-                  resolve({'message':'Dog has been added'}) :
-                  reject(new HttpException(err, 500))
-      });
+                resolve({'message':'Dog has been added'}) :
+                reject(new HttpException(err, 500))
+          })
+
+        } else {
+          reject(new HttpException(err, 500))
+        }
+      })
     })
   }
 }

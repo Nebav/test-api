@@ -7,8 +7,8 @@ export class DogsController {
   constructor(private readonly dogsService: DogsService) { }
 
   @Post('add')
-  async add(@Body('idUser') idUser, @Body('idDog') idDog, @Body('position') position) {
-    return await this.dogsService.addUserDog(idUser, idDog, position)
+  async add(@Body('idUser') idUser, @Body('idDog') idDog) {
+    return await this.dogsService.addUserDog(idUser, idDog)
   }
   @Put('update')
   async update(@Body('id') id, @Body('userDogs') userDogs) {
