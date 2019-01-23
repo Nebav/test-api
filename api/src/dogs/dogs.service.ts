@@ -40,7 +40,7 @@ export class DogsService {
   }
 
   addUserDogs(id: String, userDogs: Array<any>) {
-    let values = userDogs.map((dog) => `("${id}", "${dog.id}", ${dog.position})`).join(',')
+    let values = userDogs.map((dog) => `("${id}", "${dog.idDog}", ${dog.position})`).join(',')
     let request = 'INSERT INTO userDogs(idUser, idDog, position) VALUES ' + values
     return new Promise((resolve, reject) => {
       console.log('=> Adding User\'s Dogs : ' + id)
@@ -56,8 +56,7 @@ export class DogsService {
     return new Promise((resolve, reject) => {
       console.log('=> Getting User\'s Dogs : ' + id)
       db.all(
-        "SELECT idDog, position, dogs.name, dogs.img FROM userDogs INNER JOIN dogs ON dogs.id = userDogs.idDog WHERE idUser = ?", [id], (err, rows) => {
-              console.log(rows)
+        "SELECT idDog, position, dogs.name, dogs.img FROM userDogs INNER JOIN dogs ON dogs.id = userDogs.idDog WHERE idUser = ? ORDER BY position", [id], (err, rows) => {
               return !err ?
                   resolve(rows) :
                   reject(new HttpException(err, 500))

@@ -10,7 +10,7 @@ export class DogsController {
   async add(@Body('idUser') idUser, @Body('idDog') idDog) {
     return await this.dogsService.addUserDog(idUser, idDog)
   }
-  @Put('update')
+  @Post('update')
   async update(@Body('id') id, @Body('userDogs') userDogs) {
     await this.dogsService.deleteUserDogs(id)
     return await this.dogsService.addUserDogs(id, userDogs)
