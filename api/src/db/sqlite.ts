@@ -14,9 +14,9 @@ let sql_userDogs = 'CREATE TABLE IF NOT EXISTS userDogs(' +
 let dogs = []
 
 async function getDogImg(dog) {
-  let res = await Axios.get(`https://dog.ceo/api/breed/${dog}/images`)
+  let res = await Axios.get(`https://dog.ceo/api/breed/${dog}/images/random`)
   if (res.status === 200) {
-    return res.data.message[0]
+    return res.data.message
   }
 }
 
