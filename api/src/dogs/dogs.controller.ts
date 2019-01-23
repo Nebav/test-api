@@ -1,10 +1,11 @@
 import { Controller, Get, Post, Body, Put, Param, Delete, Query, HttpException, HttpStatus } from '@nestjs/common'
 import { DogsService } from './dogs.service'
-import bodyParser = require('body-parser');
+import bodyParser = require('body-parser')
 
 @Controller('dogs')
 export class DogsController {
-  constructor(private readonly dogsService: DogsService) { }
+  constructor(private readonly dogsService: DogsService) {
+   }
 
   @Post('add')
   async add(@Body('idUser') idUser, @Body('idDog') idDog) {
